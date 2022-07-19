@@ -8,8 +8,9 @@ import { make_position } from './make_util'
 
 function make_drag_hooks(staff: Staff) {
   return { 
-    on_hover(hover: Hover) {
-      staff._overlay.vs = Vec2.make(...hover)
+    on_hover(v_h: Vec2) {
+      staff._overlay.vs = v_h
+      staff.sheet.find_hover(v_h)
     },
     on_up(decay) {
       staff._overlay.overlay = undefined
@@ -64,6 +65,9 @@ export default class Staff {
       }
     })
 
+    this.sheet_ref = make_ref()
+    this.refs.push(this.sheet_ref)
+
     this._mode = make_mode(this)
     this._overlay = make_overlay(this)
 
@@ -98,12 +102,18 @@ const make_sheet = (staff: Staff) => {
 
   let _staves = createSignal([])
 
+  let m_nb_staves = createMemo(() => read(_staves).length + (staff.mode === 'insert' ? 1 : 0))
+
   return {
     get staves() {
       return read(_staves)
     },
     set staves(staves: Staves) {
       owrite(_staves, staves)
+    },
+    find_hover(v_h: Vec2) {
+      let v = staff.sheet_ref.get_normal_at_abs_pos(v_h)
+      console.log(Math.floor(v.scale(m_nb_staves()).y))
     }
   }
 

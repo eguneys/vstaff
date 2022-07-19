@@ -12,6 +12,19 @@ export function make_ref() {
 
   let _$clear_bounds = createSignal(undefined, { equals: false })
 
+  let _top = createMemo(() => {
+    read(_$clear_bounds)
+    return read(_$ref)?.scrollTop
+  })
+
+  let m_top = createMemo(() => {
+    let top = read(_top)
+
+    if (top !== undefined) {
+      return Vec2.make(0, top)
+    }
+  })
+
   let m_rect = createMemo(() => {
     read(_$clear_bounds)
     return read(_$ref)?.getBoundingClientRect()
@@ -45,12 +58,11 @@ export function make_ref() {
       return m_rect()
     },
     get_normal_at_abs_pos(vs: Vec2) {
-      let size = m_size(),
+        let size = m_size(),
         orig = m_orig()
 
-      if (size && orig) {
-        return vs.div(size)
-        //return vs.sub(orig).div(size)
+      if (!!size &&  !!orig) {
+        return vs.sub(orig).div(size)
       }
     }
   }
@@ -77,6 +89,7 @@ export function make_drag(hooks: DragHooks, $ref: HTMLElement) {
   let _update = createSignal([16, 16], { equals: false })
   let update = createMemo(() => read(_update))
 
+  let _hover = createSignal(undefined, { equals: (a, b) => b?.equals && a?.equals(b) })
 
   let mouse = new Mouse($ref).init()
 
@@ -92,7 +105,7 @@ export function make_drag(hooks: DragHooks, $ref: HTMLElement) {
     }
 
     if (hover) {
-      on_hover(hover)
+      owrite(_hover, Vec2.make(...hover))
     }
 
     if (up) {
@@ -127,6 +140,8 @@ export function make_drag(hooks: DragHooks, $ref: HTMLElement) {
       }
     }
   }))
+
+  createEffect(on(_hover[0], _ => _ && on_hover(_)))
 
 
   return {

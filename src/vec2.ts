@@ -44,6 +44,10 @@ export class Vec2 {
     return new Vec2(-this.y, this.x)
   }
 
+  equals(v: Vec2) {
+    return this.x === v.x && this.y === v.y
+  }
+
   get clone(): Vec2 {
     return new Vec2(this.x, this.y)
   }

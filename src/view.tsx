@@ -23,12 +23,16 @@ export const App = staff => props => {
 
   return (<>
      <vstaff ref={_ => setTimeout(() => staff.ref.$ref = _)}>
-     <staffs>
+     <sheet>
+     <staffs ref={_ => setTimeout(() => staff.sheet_ref.$ref = _)}>
         <For each={staff.sheet.staves}>{ stave =>
           <Stave stave={stave}/>
         }</For>
-        <EmptyStaff staff={staff}/>
+        <Show when={staff.mode==='insert'}>
+          <EmptyStaff staff={staff}/>
+        </Show>
       </staffs>
+      </sheet>
       <bars>
         <toolbar>
          <label onClick={_ => staff.next_mode() } class={staff.mode}>{staff.mode}</label>
