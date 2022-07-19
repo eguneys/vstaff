@@ -80,7 +80,6 @@ export function make_drag(hooks: DragHooks, $ref: HTMLElement) {
 
   let mouse = new Mouse($ref).init()
 
-
   loop((dt, dt0) => {
 
     mouse.update(dt, dt0)

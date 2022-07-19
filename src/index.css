@@ -1,14 +1,37 @@
 vstaff {
+  position: relative;
+  user-select: none;
   position: absolute;
   width: 100%;
   height: 100%;
   background: white;
 }
 
+overlay {
+  position: absolute;
+  border: 2px solid #222;
+  background: white;
+}
+
+flex-list {
+  display: flex;
+  flex-flow:row;
+  gap: 0.5em;
+}
+
+flex-list > * {
+  transition: all 0.3s;
+  padding: 0.5em;
+}
+
+flex-list > *:hover {
+  background: blue;
+  color: white;
+}
+
 staffs {
+  padding: 0.6em;
   box-sizing: border-box;
-  padding: 5em;
-  padding-right: 5em + 10px;
   position: absolute;
   width: 100%;
   height: 100%;
@@ -18,15 +41,51 @@ staffs {
 }
 
 staffs staff {
-  display: flex;
-  flex-flow: column;
-  justify-content: center;
   flex-shrink: 0;
-  height: 10em;
+  position: relative;
+  height: 4em;
 }
 
-staff line {
+staff lines {
+  position: absolute;
   width: 100%;
-  height: 1em;
-  border-top: 2px solid black;
+  top: 2em;
+  display: flex;
+  flex-flow: column;
+  align-items: stretch;
+  transform: translate(0, -50%);
+}
+
+staff lines line {
+  height: calc(0.25em - 0.03em);
+  border-top: 0.03em solid black;
+}
+
+
+
+bratext,
+bravura {
+  font-family: Bravura, sans-serif;
+  font-size: 1em;
+  line-height: 4em;
+}
+
+bravura {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+}
+
+bravura bra {
+  position: absolute;
+}
+
+
+bravura bra.ghost {
+  opacity: 0.3;
+  transition: opacity 0.3s;
+}
+
+bravura bra.ghost:hover {
+  opacity: 1;
 }
