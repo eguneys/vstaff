@@ -1,5 +1,5 @@
 import { Vec2 } from './vec2'
-import { on, createMemo, createSignal, createEffect } from 'solid-js'
+import { on, mapArray, createMemo, createSignal, createEffect } from 'solid-js'
 import { read, write, owrite } from './play'
 import { make_drag, make_ref } from './make_sticky'
 import { make_position } from './make_util'
@@ -21,6 +21,7 @@ function make_drag_hooks(staff: Staff) {
     find_inject_drag() {
     },
     on_drag_update(decay: Decay) {
+      staff.sheet.find_drag_update(decay.target.vs)
     },
     find_on_drag_start(drag) {
       let vs = Vec2.make(...drag.move)
@@ -103,6 +104,9 @@ export default class Staff {
 
     this.drag_piece = make_drag_piece(this)
 
+    createEffect(on(() => this.sheet.nb_staves, _ => {
+      this.sheet_ref.$clear_bounds()
+    }))
   }
 
 
@@ -155,14 +159,38 @@ const make_mode = (staff: Staff) => {
   }
 }
 
+const make_staff = (staff: Staff, _i: number, _staff: _Staff) => {
+
+  let m_rect = createMemo(() => {
+    let { orig, size } = staff.sheet_ref
+
+    if (orig && size) {
+      let y = orig.y + size.y * _i()
+      let x = orig.x
+
+      return Vec2.make(x, y)
+    }
+  })
+  
+  return {
+    highlight(vs: Vec2) {
+      console.log(m_rect())
+    }
+  }
+}
+
 
 const make_sheet = (staff: Staff) => {
 
   let _staves = createSignal([])
 
+  let m_staves = createMemo(mapArray(_staves[0], (_, i) => make_staff(staff, () => i() / m_nb_staves(), _)))
   let m_nb_staves = createMemo(() => read(_staves).length + (staff.mode === 'insert' ? 1 : 0))
 
   return {
+    get nb_staves() {
+      return m_nb_staves()
+    },
     get staves() {
       return read(_staves)
     },
@@ -171,6 +199,16 @@ const make_sheet = (staff: Staff) => {
     },
     find_hover(v_h: Vec2) {
       let v = staff.sheet_ref.get_normal_at_abs_pos(v_h)
+    },
+    find_drag_update(vs: Vec2) {
+      let v = staff.sheet_ref.get_normal_at_abs_pos(vs)
+
+      let yy = v.y * m_nb_staves()
+      let i = Math.floor(yy)
+      let y = yy - i
+      let x = v.x
+
+      m_staves()[i]?.highlight(Vec2.make(x, y))
     }
   }
 

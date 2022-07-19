@@ -55,7 +55,7 @@ function lerp(a: number, b: number, t: number) {
 function rlerp(a: number, b: number, t: number) {
   let res = lerp(a, b, t)
 
-  return Math.round(res * 100) / 100
+  return Math.round(res * 1000) / 1000
 }
 
 export type Point = string

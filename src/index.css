@@ -185,6 +185,5 @@ bars toolbar bratext bra:hover {
 }
 
 .drag-overlay bratext {
-  opacity: 0.8;
   z-index: 11;
 }

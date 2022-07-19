@@ -57,6 +57,12 @@ export function make_ref() {
     get rect() {
       return m_rect()
     },
+    get orig() {
+      return m_orig()
+    },
+    get size() {
+      return m_size()
+    },
     get_normal_at_abs_pos(vs: Vec2) {
         let size = m_size(),
         orig = m_orig()
@@ -133,8 +139,8 @@ export function make_drag(hooks: DragHooks, $ref: HTMLElement) {
   createEffect(on(update, (dt, dt0) => {
     let decay = m_drag_decay()
     if (decay) {
-      on_drag_update(decay)
       decay.target.lerp_vs(decay.move)
+      on_drag_update(decay)
       if (decay.drop) {
         owrite(_drag_decay, undefined)
       }
