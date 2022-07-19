@@ -108,7 +108,7 @@ const make_overlay = (staff: Staff) => {
   let _pos = make_position(0, 0)
 
   let m_style = createMemo(() => ({
-    transform: `translate(${_pos.x}px, ${_pos.y}px)`
+    transform: `translate(${_pos.x}px, calc(${_pos.y}px - 50%))`
   }))
 
   return {

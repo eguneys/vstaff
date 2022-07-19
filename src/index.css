@@ -8,6 +8,8 @@ vstaff {
 }
 
 overlay {
+  top: 0;
+  left: 0;
   position: absolute;
   border: 2px solid #222;
   background: white;
@@ -29,12 +31,19 @@ flex-list > *:hover {
   color: white;
 }
 
+vstaff:not(.print_mode) staffs {
+  margin-top: 2em;
+  height: calc(100% - 2em);
+}
+
 staffs {
-  padding: 0.6em;
-  box-sizing: border-box;
   position: absolute;
+  top: 0;
+  left: 0;
   width: 100%;
   height: 100%;
+  padding: 0.6em;
+  box-sizing: border-box;
   display: flex;
   flex-flow: column;
   overflow-y: auto;
@@ -88,4 +97,12 @@ bravura bra.ghost {
 
 bravura bra.ghost:hover {
   opacity: 1;
+}
+
+
+toolbar {
+  background: #ccc;
+  position: absolute;
+  width: 100%;
+  height: 3em;
 }

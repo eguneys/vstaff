@@ -24,12 +24,15 @@ export const App = staff => props => {
 
   return (<>
      <vstaff ref={_ => setTimeout(() => staff.ref.$ref = _)}>
-      <staffs>
+     <staffs>
         <For each={staff.sheet.staves}>{ stave =>
           <Stave stave={stave}/>
         }</For>
         <EmptyStaff staff={staff}/>
       </staffs>
+      <toolbar>
+        Hello
+      </toolbar>
       <Show when={staff.overlay}>{ overlay =>
       <overlay style={staff._overlay.style}>
       <flex-list>

@@ -12,7 +12,7 @@ export class Ctrl {
 
 const make_staff = (ctrl: Ctrl) => {
 
-  let _bra = createSignal('')
+  let _bra = createSignal('gclef\n\ngclef\n\ngclef\n\ngclef\n\ngclef\n\ngclef')
 
   let _staff = createSignal(Sheet.empty())
 
@@ -22,7 +22,7 @@ const make_staff = (ctrl: Ctrl) => {
 
   createEffect(on(() => read(_bra), (bra) => {
     owrite(_staff, Sheet.from_bra(bra))
-  }, { defer: true }))
+  }))
 
   return {
     get staves() {
