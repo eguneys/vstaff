@@ -31,11 +31,6 @@ flex-list > *:hover {
   color: white;
 }
 
-vstaff:not(.print_mode) staffs {
-  margin-top: 2em;
-  height: calc(100% - 2em);
-}
-
 staffs {
   position: absolute;
   top: 0;
@@ -99,10 +94,32 @@ bravura bra.ghost:hover {
   opacity: 1;
 }
 
+vstaff:not(.print_mode) staffs {
+  margin-bottom: 2em;
+  height: calc(100% - 2em);
+}
 
-toolbar {
-  background: #ccc;
+
+vstaff bars {
+  display: flex;
+  flex-flow: column;
   position: absolute;
+  bottom: 0;
   width: 100%;
   height: 3em;
+}
+
+bars toolbar {
+  background: #555;
+}
+
+bars toolbar label {
+  padding: 0 0.1em;
+  background: #222;
+  color: white;
+}
+
+bars toolbar label.insert {
+  background: orange;
+  color: red;
 }

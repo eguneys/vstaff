@@ -36,6 +36,14 @@ export default class Staff {
     return this._overlay.overlay
   }
 
+  get mode() {
+    return this._mode.mode
+  }
+
+  next_mode() {
+    this._mode.next()
+  }
+
   clef_mouse_down() {
     this._overlay.overlay = this.__clef_overlay
   }
@@ -56,6 +64,7 @@ export default class Staff {
       }
     })
 
+    this._mode = make_mode(this)
     this._overlay = make_overlay(this)
 
     this.__clef_overlay = make_clef_overlay(this)
@@ -65,6 +74,23 @@ export default class Staff {
   }
 
 
+}
+
+
+let modes = ['normal', 'insert']
+
+const make_mode = (staff: Staff) => {
+
+  let _mode = createSignal('normal')
+
+  return {
+    get mode() {
+      return read(_mode)
+    },
+    next() {
+      owrite(_mode, _ => modes[(modes.indexOf(_) + 1) % 2])
+    }
+  }
 }
 
 

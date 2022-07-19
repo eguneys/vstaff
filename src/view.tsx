@@ -11,7 +11,6 @@ function unbindable(
   return () => el.removeEventListener(eventName, callback, options);
 }
 
-
 export const App = staff => props => {
 
 
@@ -30,9 +29,11 @@ export const App = staff => props => {
         }</For>
         <EmptyStaff staff={staff}/>
       </staffs>
-      <toolbar>
-        Hello
-      </toolbar>
+      <bars>
+        <toolbar>
+         <label onClick={_ => staff.next_mode() } class={staff.mode}>{staff.mode}</label>
+        </toolbar> 
+      </bars>
       <Show when={staff.overlay}>{ overlay =>
       <overlay style={staff._overlay.style}>
       <flex-list>
