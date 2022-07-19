@@ -52,11 +52,20 @@ const cut_time = ''
 
 const quarter_text = ''
 
+
+const barline_single = ''
+const barline_double = ''
+const barline_final = ''
+
+
 export type GlyphMap = {
   [key: string]: string
 }
 
 export default {
+  barline_single,
+  barline_double,
+  barline_final,
   quarter_text,
   gclef,
   bclef,

@@ -22,7 +22,7 @@ export const App = staff => props => {
   onCleanup(() => unbinds.forEach(_ => _()));
 
   return (<>
-     <vstaff ref={_ => setTimeout(() => staff.ref.$ref = _)}>
+     <vstaff class={staff.mode} ref={_ => setTimeout(() => staff.ref.$ref = _)}>
      <sheet>
      <staffs ref={_ => setTimeout(() => staff.sheet_ref.$ref = _)}>
         <For each={staff.sheet.staves}>{ stave =>
@@ -34,9 +34,18 @@ export const App = staff => props => {
       </staffs>
       </sheet>
       <bars>
-        <toolbar>
+        <toolbar class={staff.mode==='insert'?'open':''}>
+          <bratext>
+            <bra>{g['barline_single']}</bra>
+            <bra>{g['barline_double']}</bra>
+          </bratext>
+        </toolbar>
+        <modebar>
          <label onClick={_ => staff.next_mode() } class={staff.mode}>{staff.mode}</label>
-        </toolbar> 
+        </modebar> 
+        <statusbar>
+          Placed there
+        </statusbar>
       </bars>
       <Show when={staff.overlay}>{ overlay =>
       <overlay style={staff._overlay.style}>
