@@ -165,6 +165,7 @@ bars toolbar bratext bra {
   padding: 0 1em;
   line-height: 4em;
   vertical-align: super;
+  margin-bottom: -0.5em;
 }
 
 
@@ -176,4 +177,14 @@ bars toolbar bratext {
 bars toolbar bratext bra:hover {
   background: lightblue;
   color: black;
+}
+
+
+.drag-overlay bratext {
+  position: absolute;
+}
+
+.drag-overlay bratext {
+  opacity: 0.8;
+  z-index: 11;
 }

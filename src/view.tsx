@@ -23,6 +23,13 @@ export const App = staff => props => {
 
   return (<>
      <vstaff class={staff.mode} ref={_ => setTimeout(() => staff.ref.$ref = _)}>
+     <div class='drag-overlay'>
+       <Show when={staff.cur_drag_piece}>{ drag_piece =>
+         <bratext class={drag_piece.klass} style={drag_piece.style}>
+           <bra>{g[drag_piece.piece]}</bra>
+         </bratext>
+       }</Show>
+     </div>
      <sheet>
      <staffs ref={_ => setTimeout(() => staff.sheet_ref.$ref = _)}>
         <For each={staff.sheet.staves}>{ stave =>
@@ -36,8 +43,9 @@ export const App = staff => props => {
       <bars>
         <toolbar class={staff.mode==='insert'?'open':''}>
           <bratext>
-            <bra>{g['barline_single']}</bra>
-            <bra>{g['barline_double']}</bra>
+            <For each={staff.toolbar.list}>{bar =>
+            <bra onMouseDown={_ => bar.mouse_down = true }>{g[bar.item]}</bra>
+            }</For>
           </bratext>
         </toolbar>
         <modebar>
