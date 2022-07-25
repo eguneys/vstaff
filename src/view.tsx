@@ -32,6 +32,9 @@ export const App = staff => props => {
          <For each={staff.bars}>{ bar =>
             <bar style={bar.style}></bar>
          }</For>
+         <For each={staff.stems}>{ stem =>
+            <stem style={stem.style}></stem>
+         }</For>
        </ledgers>
        <bravura>
          <For each={staff.bras}>{ bra =>

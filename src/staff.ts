@@ -13,6 +13,10 @@ export default class Staff {
   set bras(bras: Array<Bra>) {
     this.sheet.bras = bras
   }
+  
+  get stems() {
+    return this.sheet.stems
+  }
 
   get bars() {
     return this.sheet.bars
@@ -42,6 +46,9 @@ export default class Staff {
       'quarter_note@4,0.5',
       'quarter_note@5,0.5',
       'quarter_note@5,0.5',
+      'quarter_note@6,0',
+      'eighth_flag_up@6.265,-0.85',
+      'sixtyfourth_flag_down@6,0.85',
     ]
 
 
@@ -55,9 +62,30 @@ export default class Staff {
     this.sheet.bars = [
       '@7'
     ]
+
+
+    this.sheet.stems = [
+      '@6.265,-0.04,0.750',
+      '@6,0.79,0.750'
+    ]
   }
 }
 
+const make_stem = (staff: Staff, stem: Stem) => {
+  let [_, o_pos] = stem.split('@')
+  let [x, y, h] = o_pos.split(',')
+
+  const m_style = createMemo(() => ({
+    transform: `translate(${x}em, ${y}em)`,
+    height: `${h}em`
+  }))
+
+  return {
+    get style() {
+      return m_style()
+    }
+  }
+}
 
 const make_bar = (staff: Staff, bar: Bar) => {
   let [_, o_pos] = bar.split('@')
@@ -121,7 +149,16 @@ const make_sheet = (staff: Staff) => {
   let _bars = createSignal([])
   let m_bars = createMemo(mapArray(_bars[0], _ => make_bar(staff, _)))
 
+  let _stems = createSignal([])
+  let m_stems = createMemo(mapArray(_stems[0], _ => make_stem(staff, _)))
+
   return {
+    set stems(stems: Array<Stem>) {
+      owrite(_stems, stems)
+    },
+    get stems() {
+      return m_stems()
+    },
     set bars(bars: Array<Bar>) {
       owrite(_bars, bars)
     },
