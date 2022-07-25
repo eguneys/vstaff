@@ -5,8 +5,17 @@ import { read, write, owrite } from './play'
 
 export default class Staff {
 
+
+  onScroll() {
+    this.ref.$clear_bounds()
+  }
+
   set bras(bras: Array<Bra>) {
     this.sheet.bras = bras
+  }
+
+  get bars() {
+    return this.sheet.bars
   }
 
   get bras() {
@@ -24,27 +33,48 @@ export default class Staff {
     this.sheet = make_sheet(this)
 
     this.bras = [
-      'gclef@0,0.125',
-      'four_time@1,0.125',
-      'four_time@1,-0.375',
-      'sharp_accidental@2.125,-0.625',
-      'sharp_accidental@2.5,-0.500',
-      'sharp_accidental@1.75,-0.250',
-      'quarter_note@4,0.625',
-      'quarter_note@5,0.625',
-      'quarter_note@5,0.625',
+      'gclef@0,0',
+      'four_time@1,0',
+      'four_time@1,-0.5',
+      'sharp_accidental@2.125,-0.750',
+      'sharp_accidental@2.5,-0.50',
+      'sharp_accidental@1.75,-0.50',
+      'quarter_note@4,0.5',
+      'quarter_note@5,0.5',
+      'quarter_note@5,0.5',
     ]
 
 
     this.sheet.ledgers = [
-      '@4,0.875',
-      '@5,0.625',
-      '@5,0.875'
+      '@4,0.750',
+      '@5,0.5',
+      '@5,0.750'
+    ]
+
+
+    this.sheet.bars = [
+      '@7'
     ]
   }
 }
 
-export const make_ledger = (staff: Staff, ledger: Ledger) => {
+
+const make_bar = (staff: Staff, bar: Bar) => {
+  let [_, o_pos] = bar.split('@')
+  let [x] = o_pos.split(',')
+
+  const m_style = createMemo(() => ({
+    transform: `translate(${x}em, 0)`
+  }))
+
+  return {
+    get style() {
+      return m_style()
+    }
+  }
+}
+
+const make_ledger = (staff: Staff, ledger: Ledger) => {
 
   let [_, o_pos] = ledger.split('@')
   let [x, y] = o_pos.split(',')
@@ -61,7 +91,7 @@ export const make_ledger = (staff: Staff, ledger: Ledger) => {
   }
 }
 
-export const make_bra = (staff: Staff, bra: Bra) => {
+const make_bra = (staff: Staff, bra: Bra) => {
 
   let [glyph, o_pos] = bra.split('@')
   let [x, y] = o_pos.split(',')
@@ -80,7 +110,7 @@ export const make_bra = (staff: Staff, bra: Bra) => {
   }
 }
 
-export const make_sheet = (staff: Staff) => {
+const make_sheet = (staff: Staff) => {
 
   let _bras = createSignal([])
   let m_bras = createMemo(mapArray(_bras[0], _ => make_bra(staff, _)))
@@ -88,7 +118,16 @@ export const make_sheet = (staff: Staff) => {
   let _ledgers = createSignal([])
   let m_ledgers = createMemo(mapArray(_ledgers[0], _ => make_ledger(staff, _)))
 
+  let _bars = createSignal([])
+  let m_bars = createMemo(mapArray(_bars[0], _ => make_bar(staff, _)))
+
   return {
+    set bars(bars: Array<Bar>) {
+      owrite(_bars, bars)
+    },
+    get bars() {
+      return m_bars()
+    },
     get ledgers() {
       return m_ledgers()
     },

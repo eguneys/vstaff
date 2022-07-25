@@ -29,6 +29,9 @@ export const App = staff => props => {
          <For each={staff.ledgers}>{ ledger =>
            <ledger style={ledger.style}></ledger>
          }</For>
+         <For each={staff.bars}>{ bar =>
+            <bar style={bar.style}></bar>
+         }</For>
        </ledgers>
        <bravura>
          <For each={staff.bras}>{ bra =>
