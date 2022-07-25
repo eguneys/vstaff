@@ -25,7 +25,15 @@ export const App = staff => props => {
      <vstaff ref={_ => setTimeout(() => staff.ref.$ref = _)}>
        <staff>
        <lines> <line/> <line/> <line/> <line/> <line/> </lines>
+       <ledgers>
+         <For each={staff.ledgers}>{ ledger =>
+           <ledger style={ledger.style}></ledger>
+         }</For>
+       </ledgers>
        <bravura>
+         <For each={staff.bras}>{ bra =>
+           <bra style={bra.style}>{g[bra.glyph]}</bra>
+         }</For>
        </bravura>
        </staff>
        </vstaff>
