@@ -1,0 +1,189 @@
+vstaff {
+  position: relative;
+  user-select: none;
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  background: white;
+  overflow: hidden;
+}
+
+overlay {
+  top: 0;
+  left: 0;
+  position: absolute;
+  border: 2px solid #222;
+  background: white;
+}
+
+flex-list {
+  display: flex;
+  flex-flow:row;
+  gap: 0.5em;
+}
+
+flex-list > * {
+  transition: all 0.3s;
+  padding: 0.5em;
+}
+
+flex-list > *:hover {
+  background: blue;
+  color: white;
+}
+
+sheet {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  overflow-y: auto;
+}
+
+sheet {
+  box-sizing: border-box;
+  padding: 1em;
+}
+
+sheet staffs {
+  display: flex;
+  flex-flow: column;
+}
+
+staffs staff {
+  flex-shrink: 0;
+  position: relative;
+  height: 4em;
+}
+
+staff lines {
+  position: absolute;
+  width: 100%;
+  top: 2em;
+  display: flex;
+  flex-flow: column;
+  align-items: stretch;
+  transform: translate(0, -50%);
+}
+
+staff lines line {
+  height: calc(0.25em - 0.03em);
+  border-top: 0.03em solid black;
+}
+
+
+
+bratext,
+bravura {
+  font-family: Bravura, sans-serif;
+  font-size: 1em;
+  line-height: 4em;
+}
+
+bravura {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+}
+
+bravura bra {
+  position: absolute;
+}
+
+
+bravura bra.ghost {
+  opacity: 0.3;
+  transition: opacity 0.3s;
+}
+
+bravura bra.ghost:hover {
+  opacity: 1;
+}
+
+vstaff.insert sheet {
+  margin-bottom: 6em;
+  height: calc(100% - 6em);
+}
+
+vstaff.normal sheet {
+  margin-bottom: 2em;
+  height: calc(100% - 2em);
+}
+
+vstaff bars {
+  /*height: 2em;*/
+}
+
+
+vstaff bars {
+  display: flex;
+  flex-flow: column;
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+}
+
+vstaff statusbar {
+  position: relative;
+  background: #ccc;
+}
+
+bars toolbar {
+  position: absolute;
+  top: 0;
+  left: 0;
+  background: lightyellow;
+  width: 100%;
+  transition: transform 0.2s;
+  transform: translate(0, calc(0%));
+}
+
+bars toolbar.open {
+  transform: translate(0, calc(-100%));
+}
+
+bars modebar {
+  position: relative;
+  z-index: 10;
+  background: #555;
+}
+
+bars modebar label {
+  padding: 0 0.1em;
+  background: #222;
+  color: white;
+}
+
+bars modebar label.insert {
+  background: orange;
+  color: red;
+}
+
+
+bars toolbar bratext bra {
+  padding: 0 1em;
+  line-height: 4em;
+  vertical-align: super;
+  margin-bottom: -0.5em;
+}
+
+
+bars toolbar bratext {
+  display: flex;
+  justify-content: space-around;
+}
+
+bars toolbar bratext bra:hover {
+  background: lightblue;
+  color: black;
+}
+
+
+.drag-overlay bratext {
+  position: absolute;
+}
+
+.drag-overlay bratext {
+  z-index: 11;
+}
