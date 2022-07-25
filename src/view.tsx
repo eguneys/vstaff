@@ -23,21 +23,11 @@ export const App = staff => props => {
 
   return (<>
      <vstaff ref={_ => setTimeout(() => staff.ref.$ref = _)}>
-     <staffs>
-        <For each={staff.staves}>{ stave =>
-          <Stave stave={stave}/>
-        }</For>
-     </staffs>
-     </vstaff>
+       <staff>
+       <lines> <line/> <line/> <line/> <line/> <line/> </lines>
+       <bravura>
+       </bravura>
+       </staff>
+       </vstaff>
      </>)
-}
-
-
-const Stave = props => {
-  return (<staff>
-      <lines> <line/> <line/> <line/> <line/> <line/> </lines>
-      <bravura>
-        <bra style={clef_styles[props.stave.clef]}>{g[props.stave.clef]}</bra>
-      </bravura>
-    </staff>)
 }
