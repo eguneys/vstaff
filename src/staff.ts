@@ -13,6 +13,15 @@ export default class Staff {
   set bras(bras: Array<Bra>) {
     this.sheet.bras = bras
   }
+
+
+  get ties() {
+    return this.sheet.ties
+  }
+
+  get beams() {
+    return this.sheet.beams
+  }
   
   get stems() {
     return this.sheet.stems
@@ -45,7 +54,6 @@ export default class Staff {
       'sharp_accidental@1.75,-0.50',
       'quarter_note@4,0.5',
       'quarter_note@5,0.5',
-      'quarter_note@5,0.5',
       'quarter_note@6,0',
       'eighth_flag_up@6.265,-0.85',
       'sixtyfourth_flag_down@6,0.85',
@@ -65,9 +73,64 @@ export default class Staff {
 
 
     this.sheet.stems = [
-      '@6.265,-0.04,0.750',
-      '@6,0.79,0.750'
+      '@6.265,-0.04,0.75',
+      `@6,${0.75+0.04},0.75`,
+      `@4.265,${0.5-0.04},0.75`,
+      `@5.265,${0.5-0.04},0.75`,
     ]
+
+
+    this.sheet.beams = [
+      `@4.265,${0.5-0.04},${0.5-0.04}`,
+      `@5.265,${0.5-0.04},${-0.04}`
+    ]
+
+
+    this.sheet.ties = [
+      `flip@4.125,1.5,5.125`
+    ]
+  }
+}
+
+
+
+const make_tie = (staff: Staff, tie: Tie) => {
+  let [klass, o_pos] = tie.split('@')
+  let [x, y, x2] = o_pos.split(',')
+  x2 -= x
+  x2 *= 100
+
+  x2 = 20
+
+  const m_style = createMemo(() => ({
+    transform: `translate(${x}em, ${y}em)`
+  }))
+
+  return {
+    x2,
+    klass,
+    get style() {
+      return m_style()
+    }
+  }
+}
+
+const make_beam = (staff: Staff, beam: Beam) => {
+  let [_, o_pos] = beam.split('@')
+  let [x, y, y2] = o_pos.split(',')
+  y2 -= y
+
+  const m_style = createMemo(() => ({
+    transform: `translate(${x}em, ${y}em)`
+  }))
+
+  return {
+    get y2() {
+      return y2 * 100
+    },
+    get style() {
+      return m_style()
+    }
   }
 }
 
@@ -152,7 +215,26 @@ const make_sheet = (staff: Staff) => {
   let _stems = createSignal([])
   let m_stems = createMemo(mapArray(_stems[0], _ => make_stem(staff, _)))
 
+  let _beams = createSignal([])
+  let m_beams = createMemo(mapArray(_beams[0], _ => make_beam(staff, _)))
+
+  let _ties = createSignal([])
+  let m_ties = createMemo(mapArray(_ties[0], _ => make_tie(staff, _)))
+
   return {
+    set ties(ties: Array<Tie>) {
+      owrite(_ties, ties)
+    },
+    get ties() {
+      return m_ties()
+    },
+
+    set beams(beams: Array<Beam>) {
+      owrite(_beams, beams)
+    },
+    get beams() {
+      return m_beams()
+    },
     set stems(stems: Array<Stem>) {
       owrite(_stems, stems)
     },

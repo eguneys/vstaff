@@ -35,6 +35,12 @@ export const App = staff => props => {
          <For each={staff.stems}>{ stem =>
             <stem style={stem.style}></stem>
          }</For>
+         <For each={staff.beams}>{ beam =>
+           <Beam style={beam.style} y2={beam.y2}/>
+         }</For>
+         <For each={staff.ties}>{ tie =>
+           <Tie klass={tie.klass} style={tie.style} x2={tie.x2}/>
+         }</For>
        </ledgers>
        <bravura>
          <For each={staff.bras}>{ bra =>
@@ -45,3 +51,42 @@ export const App = staff => props => {
        </vstaff>
      </>)
 }
+
+
+function tie_path(x) {
+
+  return `M 0 ${x*0.5} c ${x} -${x*0.5}    ${x*4} -${x*0.5}    ${x*5} 0
+    -${x} -${x*0.5-4} -${x*4} -${x*0.5-4} -${x*5} 0`
+
+  return `M 0 ${x*0.5} c ${x} -${x*0.5}    ${x*4} -${x*0.5}    ${x*5} 0
+    -${x} -${x*0.5-4} -${x*4} -${x*0.5-4} -${x*5} 0`
+
+}
+
+function beam_path(x2: number, y2: number) {
+  let x = 0
+  let y = 0
+  let k = 10 
+  return `M${x},${y+k}L${x},${y}L${x2},${y2}L${x2},${y2+k}L${x},${y+k}` 
+}
+
+
+const Tie = props => {
+  return (<tie class={props.klass} style={props.style}>
+    <svg width="1em" height="1em" viewBox={`0 0 100 100`}>
+      <path d={tie_path(props.x2)}/>
+    </svg>
+  </tie>)
+}
+
+const Beam = props => {
+  let minY = props.y2
+  return (<beam style={props.style}>
+    <svg width="1em" height="1em" viewBox={`0 0 100 100`}>
+      <path d={beam_path(100, props.y2)}/>
+    </svg>
+  </beam>)
+}
+
+
+

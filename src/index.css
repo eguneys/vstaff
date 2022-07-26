@@ -59,6 +59,20 @@ ledgers bar {
 }
 
 ledgers stem {
-  margin-top: 1.25em;
   border-left: 0.03em solid black;
+}
+
+ledgers beam, 
+ledgers stem,
+ledgers tie {
+  margin-top: 1.25em;
+}
+
+ledgers beam svg,
+ledgers tie svg {
+  overflow: visible;
+}
+
+ledgers tie.flip svg {
+  transform: scale(1, -1) translate(0, 90%);
 }
