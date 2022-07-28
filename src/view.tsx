@@ -24,7 +24,7 @@ export const App = staff => props => {
   return (<>
      <vstaff ref={_ => setTimeout(() => staff.ref.$ref = _)}>
        <staff>
-        <Show when={staff.playback}>{cursor =>
+        <Show when={staff.playback.show}>{cursor =>
           <div class='playback'>
             <span style={cursor.style} class='cursor'><span style={cursor.line_style} class='line'></span></span>
           </div>

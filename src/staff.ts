@@ -115,6 +115,11 @@ const make_playback = (solsido: Solsido) => {
   }))
 
   return {
+    get show() {
+      if (read(_show)) {
+        return this
+      }
+    },
     get line_style() {
       return m_line_style()
     },
