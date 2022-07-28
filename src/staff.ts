@@ -129,8 +129,11 @@ const make_playback = (solsido: Solsido) => {
     set_play(v: boolean) {
       owrite(_show, v)
     },
-    set_x(x: number) {
+    set xwi(xwi: number) {
+      let [x, w, i] = xwi.split(',')
       owrite(_x, x)
+      owrite(_w, w)
+      owrite(_i, i)
     }
   }
 }
