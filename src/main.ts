@@ -17,6 +17,9 @@ export default function VStaff(element: HTMLElement, options = {}) {
     },
     set xwi(xwi: XWI) {
       staff.playback.xwi = xwi
+    },
+    set playback(v: boolean) {
+      staff.playback.set_play(v)
     }
   }
 }
