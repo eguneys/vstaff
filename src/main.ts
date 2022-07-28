@@ -12,5 +12,11 @@ export default function VStaff(element: HTMLElement, options = {}) {
   render(App(staff), element)
 
   return {
+    set bras(bras: Bras) {
+      staff.bras = bras
+    },
+    set xwi(xwi: XWI) {
+      staff.playback.xwi = xwi
+    }
   }
 }

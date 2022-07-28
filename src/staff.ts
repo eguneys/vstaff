@@ -45,6 +45,8 @@ export default class Staff {
 
     this.sheet = make_sheet(this)
 
+    this.playback = make_playback(this)
+    /*
     this.bras = [
       'gclef@0,0',
       'four_time@1,0',
@@ -89,10 +91,44 @@ export default class Staff {
     this.sheet.ties = [
       `flip@4.125,1.5,5.125`
     ]
+   */
   }
 }
 
 
+
+const make_playback = (solsido: Solsido) => {
+
+  let _show = createSignal(false)
+  let _x = createSignal(1)
+  let _w = createSignal(1)
+  let _i = createSignal(100)
+
+  let m_style = createMemo(() => ({
+    transform: `translate(${read(_x)}em, 0)`,
+    width: `${read(_w)}em`
+  }))
+
+
+  let m_line_style = createMemo(() => ({
+    transform: `translate(${read(_w)* 0.01 * read(_i)}em, 0)`
+  }))
+
+  return {
+    get line_style() {
+      return m_line_style()
+    },
+    get style() {
+      return m_style()
+    },
+    set_play(v: boolean) {
+      owrite(_show, v)
+    },
+    set_x(x: number) {
+      owrite(_x, x)
+    }
+  }
+}
 
 const make_tie = (staff: Staff, tie: Tie) => {
   let [klass, o_pos] = tie.split('@')
@@ -144,6 +180,13 @@ const make_stem = (staff: Staff, stem: Stem) => {
   }))
 
   return {
+    set xwi(xwi: XWI) {
+      let [x, w, i] = xwi.split(',')
+
+      owrite(_x, x)
+      owrite(_w, w)
+      owrite(_i, i)
+    },
     get style() {
       return m_style()
     }
