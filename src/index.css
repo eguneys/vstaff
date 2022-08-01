@@ -80,7 +80,7 @@ ledgers tie.flip svg {
 
 
 
-.playback {
+staff .playback {
   position: absolute;
   top: 0;
   left: 0;
@@ -88,14 +88,14 @@ ledgers tie.flip svg {
   height: 100%;
 }
 
-.playback .cursor {
+staff .playback .cursor {
   position: absolute;
   width: 0.5em;
   background: hsla(50, 90%, 70%, 0.5);
   height: 100%;
 }
 
-.playback .cursor .line {
+staff .playback .cursor .line {
   position: absolute;
   content: ' ';
   height: 100%;
