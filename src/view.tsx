@@ -22,7 +22,7 @@ export const App = staff => props => {
   onCleanup(() => unbinds.forEach(_ => _()));
 
   return (<>
-     <vstaff ref={_ => setTimeout(() => staff.ref.$ref = _)}>
+     <vstaff style={staff.style} ref={_ => setTimeout(() => staff.ref.$ref = _)}>
        <staff>
         <Show when={staff.playback.show}>{cursor =>
           <div class='playback'>

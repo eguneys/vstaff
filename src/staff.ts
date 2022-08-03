@@ -10,6 +10,10 @@ export default class Staff {
     this.ref.$clear_bounds()
   }
 
+  get style() {
+    return this.m_style()
+  }
+
   set bras(bras: Array<Bra>) {
     this.sheet.bras = bras
   }
@@ -43,55 +47,13 @@ export default class Staff {
 
     this.ref = make_ref()
 
+    this.m_style = createMemo(() => ({
+      'font-size': `${(this.ref.size?.y || 0) / 4}px`
+    }))
+
     this.sheet = make_sheet(this)
 
     this.playback = make_playback(this)
-    /*
-    this.bras = [
-      'gclef@0,0',
-      'four_time@1,0',
-      'four_time@1,-0.5',
-      'sharp_accidental@2.125,-0.750',
-      'sharp_accidental@2.5,-0.50',
-      'sharp_accidental@1.75,-0.50',
-      'quarter_note@4,0.5',
-      'quarter_note@5,0.5',
-      'quarter_note@6,0',
-      'eighth_flag_up@6.265,-0.85',
-      'sixtyfourth_flag_down@6,0.85',
-    ]
-
-
-    this.sheet.ledgers = [
-      '@4,0.750',
-      '@5,0.5',
-      '@5,0.750'
-    ]
-
-
-    this.sheet.bars = [
-      '@7'
-    ]
-
-
-    this.sheet.stems = [
-      '@6.265,-0.04,0.75',
-      `@6,${0.75+0.04},0.75`,
-      `@4.265,${0.5-0.04},0.75`,
-      `@5.265,${0.5-0.04},0.75`,
-    ]
-
-
-    this.sheet.beams = [
-      `@4.265,${0.5-0.04},${0.5-0.04}`,
-      `@5.265,${0.5-0.04},${-0.04}`
-    ]
-
-
-    this.sheet.ties = [
-      `flip@4.125,1.5,5.125`
-    ]
-   */
   }
 }
 

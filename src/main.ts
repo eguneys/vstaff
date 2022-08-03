@@ -12,6 +12,7 @@ export default function VStaff(element: HTMLElement, options = {}) {
   render(App(staff), element)
 
   return {
+    sheet: staff.sheet,
     set bras(bras: Bras) {
       staff.bras = bras
     },
