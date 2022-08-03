@@ -235,14 +235,19 @@ const make_ledger = (staff: Staff, ledger: Ledger) => {
 
 const make_bra = (staff: Staff, bra: Bra) => {
 
-  let [glyph, o_pos] = bra.split('@')
+  let [glyph_klass, o_pos] = bra.split('@')
   let [x, y] = o_pos.split(',')
+
+  let [glyph, ...klass] = glyph_klass.split(',')
 
   const m_style = createMemo(() => ({
     transform: `translate(${x}em, ${y}em)`
   }))
 
   return {
+    get klass() {
+      return klass.join(' ')
+    },
     get glyph() {
       return glyph
     },

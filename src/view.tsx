@@ -49,7 +49,7 @@ export const App = staff => props => {
        </ledgers>
        <bravura>
          <For each={staff.bras}>{ bra =>
-           <bra style={bra.style}>{g[bra.glyph]}</bra>
+           <bra class={bra.klass} style={bra.style}>{g[bra.glyph]}</bra>
          }</For>
        </bravura>
        </staff>
